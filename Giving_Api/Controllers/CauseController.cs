@@ -134,7 +134,7 @@ namespace Giving_Api.Controllers
         {
             try
             {
-                dynamic data = await _cause.GetAllCause();
+                dynamic data = await _cause.GetAllCause(); 
 
                 if (data.Success == false)
                 {

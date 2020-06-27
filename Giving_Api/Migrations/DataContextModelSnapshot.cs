@@ -112,10 +112,16 @@ namespace Giving_Api.Migrations
                     b.Property<int>("CardNumber")
                         .HasColumnType("int");
 
+                    b.Property<string>("CauseId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ExpiryDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Frequency")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -124,9 +130,168 @@ namespace Giving_Api.Migrations
                     b.Property<string>("Pin")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Donations");
+                });
+
+            modelBuilder.Entity("Giving_Api.Models.LoanDocument", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BusinessPlan")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyRegistrationDocuments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GuarantorLetter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IndemnityForm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MeansOfIdentification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RelevantPictures")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VideoRecording")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoanDocument");
+                });
+
+            modelBuilder.Entity("Giving_Api.Models.LoanDonor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DonorAccountName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("DonorAccountNumber")
+                        .HasColumnType("float");
+
+                    b.Property<string>("DonorBank")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DonorEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DonorFirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DonorLastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DonorLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DonorPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EcoFriendlyPurpose")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("ImpactInvestmentAmount")
+                        .HasColumnType("float");
+
+                    b.Property<Guid?>("LoanDonorDocumentsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LoanId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Options")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurposePreferred")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tenor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LoanDonorDocumentsId");
+
+                    b.ToTable("LoanDonors");
+                });
+
+            modelBuilder.Entity("Giving_Api.Models.LoanDonorDocuments", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MeansOfIdentification")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("registrationdocuments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoanDonorDocuments");
+                });
+
+            modelBuilder.Entity("Giving_Api.Models.Loans", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("AmountRequested")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("LoanDocumentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Purpose")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Repaymentsource")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tenor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LoanDocumentId");
+
+                    b.ToTable("loans");
                 });
 
             modelBuilder.Entity("Giving_Api.Models.MyMessages", b =>
@@ -153,30 +318,32 @@ namespace Giving_Api.Migrations
 
             modelBuilder.Entity("Giving_Api.Models.RegistrationDocument", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AlumniAssociationSetup")
+                    b.Property<string>("AlumniAssociationSetup_Path")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AuthorizedSignatoryList")
+                    b.Property<string>("AuthorizedSignatoryList_Path")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CAC_RegDocument")
+                    b.Property<string>("CAC_RegDocument_Path")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CorporateGovernanceStructure")
+                    b.Property<string>("CorporateGovernanceStructure_Path")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Identification")
+                    b.Property<string>("Identification_Path")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MemorandumOfAssociation")
+                    b.Property<string>("MemorandumOfAssociation_Path")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ValidIdentificationOfAuthorizedSignatories")
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ValidIdentificationOfAuthorizedSignatories_Path")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -243,8 +410,8 @@ namespace Giving_Api.Migrations
                     b.Property<string>("PysicalAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RegDocumentId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RegDocumentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
@@ -265,11 +432,75 @@ namespace Giving_Api.Migrations
                     b.ToTable("UserProfile");
                 });
 
+            modelBuilder.Entity("Giving_Api.Models.Volunteer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Interest")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InterestDuration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("VolunteerPledge")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("volunteers");
+                });
+
             modelBuilder.Entity("Giving_Api.Models.Cause", b =>
                 {
                     b.HasOne("Giving_Api.Models.CauseAccount", "CauseBeneficiaryAccount")
                         .WithMany()
                         .HasForeignKey("CauseBeneficiaryAccountId");
+                });
+
+            modelBuilder.Entity("Giving_Api.Models.LoanDonor", b =>
+                {
+                    b.HasOne("Giving_Api.Models.LoanDonorDocuments", "LoanDonorDocuments")
+                        .WithMany()
+                        .HasForeignKey("LoanDonorDocumentsId");
+                });
+
+            modelBuilder.Entity("Giving_Api.Models.Loans", b =>
+                {
+                    b.HasOne("Giving_Api.Models.LoanDocument", "LoanDocument")
+                        .WithMany()
+                        .HasForeignKey("LoanDocumentId");
                 });
 
             modelBuilder.Entity("Giving_Api.Models.UserProfile", b =>

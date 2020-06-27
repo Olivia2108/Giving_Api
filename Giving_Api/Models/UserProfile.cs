@@ -23,7 +23,7 @@ namespace Giving_Api.Models
 
         [ForeignKey("RegDocumentId")]
         public RegistrationDocument RegDocument { get; set; }
-        public int RegDocumentId { get; set; }
+        public Guid RegDocumentId { get; set; }
         public string UserID { get; set; }
 
     }

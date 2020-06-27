@@ -25,6 +25,9 @@ namespace Giving_Api.Data
         public DbSet<Donation> Donations { get; set; }
         public DbSet<MyRewards> MyRewards { get; set; }
         public DbSet<MyMessages> MyMessages { get; set; }
+        public DbSet<Volunteer> volunteers { get; set; }
+        public DbSet<Loans> loans { get; set; }
+        public DbSet<LoanDonor> LoanDonors { get; set; }
      
     }
 }

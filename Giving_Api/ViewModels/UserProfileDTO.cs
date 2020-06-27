@@ -19,7 +19,7 @@ namespace Giving_Api.ViewModels
         public bool Instagram { get; set; }
         public string UserID { get; set; }
         public RegistrationDocument RegDocument { get; set; }
-        public int RegDocumentId { get; set; }
+        public Guid RegDocumentId { get; set; }
 
     }
 }

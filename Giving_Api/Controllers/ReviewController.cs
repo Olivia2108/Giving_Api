@@ -87,11 +87,11 @@ namespace Giving_Api.Controllers
 
         [HttpGet]
         [Route("GetReviewByUserEmail/{Email}")]
-        public IActionResult GetReviewByUserEmail(string Email)
+        public async Task<IActionResult> GetReviewByUserEmail(string Email)
         {
             try
             {
-                dynamic data = _review.GetReviewByUserEmail(Email);
+                dynamic data = await _review.GetReviewByUserEmail(Email);
 
                 if (data.Success == false)
                 {

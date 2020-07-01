@@ -1,37 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Giving_Api.Interface;
 using Giving_Api.Models;
-using Giving_Api.Security;
 using Giving_Api.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Giving_Api.Controllers
 {
-    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CauseController : ControllerBase
+    public class ReviewController : ControllerBase
     {
-
-        private readonly ICause _cause;
+        private readonly IReview _review;
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _accessor;
 
-        public CauseController(ICause cause, IConfiguration config, IHttpContextAccessor accessor)
+        public ReviewController(IReview review, IConfiguration config, IHttpContextAccessor accessor)
         {
-            _cause = cause;
+            _review = review;
             _config = config;
             _accessor = accessor;
         }
@@ -39,102 +31,67 @@ namespace Giving_Api.Controllers
         ServiceResponse res = new ServiceResponse();
 
 
-        
-        [HttpPost("AddCause")]
-        public async Task<IActionResult> AddCause(CauseDTO causeDTO)
+        // [Authorize(Roles ="User")]
+        [HttpPost("Review")]
+        public async Task<IActionResult> AddReview(string ReviewId, ReviewDTO reviewDTO)
         {
+
             try
             {
-                //var userid = _accessor.HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).SingleOrDefault();
-
-                var userid = "B7C60175-B370-4CE4-AC86-08D81D38F5FE";
-                dynamic result = await _cause.AddCause(causeDTO, userid);
+                var userID = "B7C60175-B370-4CE4-AC86-08D81D38F5FE";
+                dynamic result = await _review.AddReview(reviewDTO, userID);
                 if (result.Success == false)
                 {
                     return BadRequest(result);
                 }
 
                 return Ok(result);
-                
+
             }
             catch (Exception ex)
             {
 
-                throw;
+                throw new Exception();
             }
         }
 
-
-        [Route("GetCauseById/{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetCauseById(Guid id)
+        [Route("GetReviewById/{id}")]
+        public async Task<IActionResult> GetReviewById(Guid id)
         {
             try
             {
-                
                 if (id != null)
                 {
-                    dynamic cause = await _cause.GetCauseById(id);
-                    if (cause.Success == false)
+                    dynamic reviewById = await _review.GetReviewsById(id);
+                    if (reviewById.Success == false)
                     {
-                        return NotFound(cause);
+                        return NotFound(reviewById);
                     }
 
-                    return Ok(cause);
+                    return Ok(reviewById);
 
                 }
 
-                return NotFound("Id field cannot be null");
-
-                
+                return BadRequest("Review Id cannot be null");
             }
             catch (Exception ex)
             {
 
                 throw;
             }
+
         }
 
 
 
-        [Route("GetCauseByUserId/{UserId}")]
         [HttpGet]
-        public async Task<IActionResult> GetCauseByUserId(Guid UserId)
+        [Route("GetReviewByUserEmail/{Email}")]
+        public async Task<IActionResult> GetReviewByUserEmail(string Email)
         {
             try
             {
-
-                if (UserId != null)
-                {
-                    dynamic cause = await _cause.GetCauseByUserId(UserId);
-                    if (cause.Success == false)
-                    {
-                        return NotFound(cause);
-                    }
-
-                    return Ok(cause);
-
-                }
-
-                return NotFound("Id field cannot be null");
-
-
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
-
-        [HttpGet]
-        [Route("GetAllCauses")]
-        public async Task<IActionResult> GetAllCauses()
-        {
-            try
-            {
-                dynamic data = await _cause.GetAllCause(); 
+                dynamic data = _review.GetReviewByUserEmail(Email);
 
                 if (data.Success == false)
                 {
@@ -149,20 +106,19 @@ namespace Giving_Api.Controllers
             }
         }
 
-
-        [HttpPost("UpdateCause/{Id}")]
-        public async Task<IActionResult> UpdateCause(CauseDTO causeDTO, Guid Id)
+        [HttpGet]
+        [Route("AllReviews")]
+        public async Task<IActionResult> GetAllReviews()
         {
             try
             {
-                dynamic result = await _cause.UpdateCause(causeDTO, Id);
-                if (result.Success == false)
-                {
-                    return BadRequest(result);
-                }
+                dynamic data = await _review.GetAllReview();
 
-                return Ok(result);
-                
+                if (data.Success == false)
+                {
+                    return NotFound(data);
+                }
+                return Ok(data);
             }
             catch (Exception ex)
             {
@@ -171,16 +127,39 @@ namespace Giving_Api.Controllers
             }
         }
 
+        [HttpPost("UpdateReview/{Id}")]
+        public async Task<IActionResult> UpdateReview(ReviewDTO reviewDTO, Guid Id)
+        {
+
+            try
+            {
+                dynamic result = await _review.UpdateReview(reviewDTO, Id);
+                if (result.Success == false)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception();
+            }
+
+
+        }
+
 
         [HttpDelete]
-        [Route("DeleteCauseById/{id}")]
-        public async Task<IActionResult> DeleteCauseById(Guid id)
+        [Route("DeleteReviewById/{id}")]
+        public async Task<IActionResult> DeleteReviewById(Guid id)
         {
             try
             {
                 if (id != null)
                 {
-                    dynamic deleteById = await _cause.DeleteCauseById(id);
+                    dynamic deleteById = await _review.DeleteReviewById(id);
                     if (deleteById.Success == false)
                     {
                         return NotFound(deleteById);
@@ -190,7 +169,7 @@ namespace Giving_Api.Controllers
 
                 }
 
-                return BadRequest("Donation Id cannot be null");
+                return BadRequest("Review Id cannot be null");
             }
             catch (Exception ex)
             {
@@ -199,5 +178,10 @@ namespace Giving_Api.Controllers
             }
 
         }
+
+
+
+
+
     }
 }

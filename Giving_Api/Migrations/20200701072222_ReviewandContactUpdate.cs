@@ -2,7 +2,7 @@
 
 namespace Giving_Api.Migrations
 {
-    public partial class @new : Migration
+    public partial class ReviewandContactUpdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

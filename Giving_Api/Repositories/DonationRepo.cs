@@ -13,22 +13,24 @@ namespace Giving_Api.Repositories
     public class DonationRepo:IDonation
     {
         private readonly DataContext dataContext;
+        private readonly IRecurringDonation _recurringDonation;
 
-        public DonationRepo(DataContext _dataContext)
+        public DonationRepo(DataContext _dataContext, IRecurringDonation recurringDonation)
         {
             dataContext = _dataContext;
+            _recurringDonation = recurringDonation;
         }
 
         ServiceResponse res = new ServiceResponse();
 
        
-        public async Task<object> AddDonation(DonationDTO donationDTO, string CauseID, string UserEmail)
+        public async Task<object> AddDonation(DonationDTO donationDTO, string CauseID)
         {
             try
             {
-                if(string.IsNullOrEmpty(UserEmail))
+                if(string.IsNullOrEmpty(donationDTO.Email))
                 {
-                    UserEmail = "Annonymous";
+                    donationDTO.Email = "Annonymous";
                 }
                 var data = new Donation
                 {
@@ -42,7 +44,7 @@ namespace Giving_Api.Repositories
                     Name = donationDTO.Name,
                     Pin = donationDTO.Pin,
                     CauseId = CauseID,
-                    UserEmail = UserEmail,
+                    UserId = donationDTO.UserId,
                     Frequency = donationDTO.Frequency
 
                 };
@@ -50,6 +52,24 @@ namespace Giving_Api.Repositories
                 int result = await dataContext.SaveChangesAsync();
                 if (result > 0)
                 {
+                    if(donationDTO.Frequency != "one time")
+                    {
+                        var donationId = await dataContext.Donations.Where(x => x.Email == donationDTO.Email).FirstOrDefaultAsync();
+                        var recurringDonation = new RecurringDonationDTO
+                        {
+                            CauseID = CauseID,
+                            DonationDay = DateTime.Now,
+                            DonationID = donationId.Id,
+                            Email = donationDTO.Email,
+                            Frequency = donationDTO.Frequency,
+                            FullName = donationDTO.Name,
+                            UserID = donationDTO.UserId
+
+                        };
+                        dynamic response = await _recurringDonation.AddRecurringDonation(recurringDonation);
+                    }
+                    
+                   // if(response.Success == true) { }
                     //email
                     res.Success = true;
                     res.Data = "Ok";

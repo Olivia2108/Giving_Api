@@ -15,32 +15,30 @@ namespace Giving_Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoansController : ControllerBase
+    public class RecurringDonationController : ControllerBase
     {
-        private readonly ILoan _loan;
+        private readonly IRecurringDonation _recurringdonation;
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _accessor;
 
-
-        public LoansController(ILoan loan, IConfiguration config, IHttpContextAccessor accessor)
+        public RecurringDonationController(IRecurringDonation recurringdonation, IConfiguration config, IHttpContextAccessor accessor)
         {
-            _loan = loan;
+            _recurringdonation = recurringdonation;
             _config = config;
             _accessor = accessor;
         }
+
         ServiceResponse res = new ServiceResponse();
 
-
-        [HttpPost("AddLoan")]
-        public async Task<IActionResult> AddLoan( LoansDTO loansDTO)
+        // [Authorize(Roles ="User")]
+        [HttpPost("RecurringDonation")]
+        public async Task<IActionResult> RecurringDonation(RecurringDonationDTO RecurringdonationDTO)
         {
 
             try
             {
-                //var userid = _accessor.HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).SingleOrDefault();
-
-                var UserId = "B7C60175-B370-4CE4-AC86-08D81D38F5FE";
-                dynamic result = await _loan.AddLoan(loansDTO, UserId);
+                var UserId = "6B42D1A9-C066-4F7F-8686-08D819F151A5";
+                dynamic result = await _recurringdonation.AddRecurringDonation(RecurringdonationDTO);
                 if (result.Success == false)
                 {
                     return BadRequest(result);
@@ -57,24 +55,24 @@ namespace Giving_Api.Controllers
         }
 
         [HttpGet]
-        [Route("GetLoanById/{id}")]
-        public async Task<IActionResult> GetLoanById(Guid id)
+        [Route("GetRecurringDonationById/{id}")]
+        public async Task<IActionResult> GetRecurringDonationById(Guid id)
         {
             try
             {
                 if (id != null)
                 {
-                    dynamic loanById = await _loan.GetLoanById(id);
-                    if (loanById.Success == false)
+                    dynamic donateById = await _recurringdonation.GetRecurringDonationById(id);
+                    if (donateById.Success == false)
                     {
-                        return NotFound(loanById);
+                        return NotFound(donateById);
                     }
 
-                    return Ok(loanById);
+                    return Ok(donateById);
 
                 }
 
-                return BadRequest("Loan Id cannot be null");
+                return BadRequest("Donation Id cannot be null");
             }
             catch (Exception ex)
             {
@@ -85,12 +83,12 @@ namespace Giving_Api.Controllers
         }
 
         [HttpGet]
-        [Route("AllLoan")]
-        public async Task<IActionResult> GetAllLoans()
+        [Route("AllRecuuringDonation")]
+        public async Task<IActionResult> GetAllRecurringDonation()
         {
             try
             {
-                dynamic data = await _loan.GetAllLoans();
+                dynamic data = await _recurringdonation.GetRecurringDonation();
 
                 if (data.Success == false)
                 {
@@ -106,13 +104,13 @@ namespace Giving_Api.Controllers
         }
 
 
-        [HttpPost("UpdateLoan/{Id}")]
-        public async Task<IActionResult> UpdateLoan(LoansDTO loansDTO, Guid Id)
+        [HttpPost("UpdateRecurringDonation/{Id}")]
+        public async Task<IActionResult> UpdateRecurringDonation(RecurringDonationDTO recurringdonationDTO, Guid Id)
         {
 
             try
             {
-                dynamic result = await _loan.UpdateLoan(loansDTO, Id);
+                dynamic result = await _recurringdonation.UpdateRecurringDonation(recurringdonationDTO, Id);
                 if (result.Success == false)
                 {
                     return BadRequest(result);
@@ -129,15 +127,16 @@ namespace Giving_Api.Controllers
 
         }
 
+
         [HttpDelete]
-        [Route("DeleteLoanById/{id}")]
-        public async Task<IActionResult> DeleteLoanById(Guid id)
+        [Route("DeleteRecurringDonationById/{id}")]
+        public async Task<IActionResult> DeleteRecurringDonationById(Guid id)
         {
             try
             {
                 if (id != null)
                 {
-                    dynamic deleteById = await _loan.DeleteLoanById(id);
+                    dynamic deleteById = await _recurringdonation.DeleteRecurringDonationById(id);
                     if (deleteById.Success == false)
                     {
                         return NotFound(deleteById);
@@ -147,7 +146,7 @@ namespace Giving_Api.Controllers
 
                 }
 
-                return BadRequest("Loan Id cannot be null");
+                return BadRequest("RecurringDonation Id cannot be null");
             }
             catch (Exception ex)
             {
@@ -155,36 +154,6 @@ namespace Giving_Api.Controllers
                 throw;
             }
 
-        }
-
-        [Route("GetLoanByUserId/{UserId}")]
-        [HttpGet]
-        public async Task<IActionResult> GetLoanByUserId(Guid UserId)
-        {
-            try
-            {
-
-                if (UserId != null)
-                {
-                    dynamic Loan = await _loan.GetLoanByUserId(UserId);
-                    if (Loan.Success == false)
-                    {
-                        return NotFound(Loan);
-                    }
-
-                    return Ok(Loan);
-
-                }
-
-                return NotFound("Id field cannot be null");
-
-
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
         }
     }
 }

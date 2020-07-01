@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Giving_Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200625124216_InitMigration")]
-    partial class InitMigration
+    [Migration("20200701072222_ReviewandContactUpdate")]
+    partial class ReviewandContactUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -93,6 +93,29 @@ namespace Giving_Api.Migrations
                     b.ToTable("CauseAccounts");
                 });
 
+            modelBuilder.Entity("Giving_Api.Models.Contact", b =>
+                {
+                    b.Property<Guid>("ContactID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CauseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContactEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ContactID");
+
+                    b.ToTable("contacts");
+                });
+
             modelBuilder.Entity("Giving_Api.Models.Donation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -132,7 +155,7 @@ namespace Giving_Api.Migrations
                     b.Property<string>("Pin")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserEmail")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -318,6 +341,38 @@ namespace Giving_Api.Migrations
                     b.ToTable("MyRewards");
                 });
 
+            modelBuilder.Entity("Giving_Api.Models.RecurringDonations", b =>
+                {
+                    b.Property<Guid>("RecurringDonationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CauseID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DonationDay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DonationID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Frequency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RecurringDonationID");
+
+                    b.ToTable("recurringDonations");
+                });
+
             modelBuilder.Entity("Giving_Api.Models.RegistrationDocument", b =>
                 {
                     b.Property<Guid>("Id")
@@ -351,6 +406,32 @@ namespace Giving_Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RegistrationDocument");
+                });
+
+            modelBuilder.Entity("Giving_Api.Models.Review", b =>
+                {
+                    b.Property<Guid>("ReviewID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CauseID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ReviewEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReviewMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReviewTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ReviewID");
+
+                    b.ToTable("reviews");
                 });
 
             modelBuilder.Entity("Giving_Api.Models.User", b =>

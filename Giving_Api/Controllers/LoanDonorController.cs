@@ -39,7 +39,7 @@ namespace Giving_Api.Controllers
             {
                 //var userid = _accessor.HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).SingleOrDefault();
 
-                var UserId = "6B42D1A9-C066-4F7F-8686-08D819F151A5";
+                var UserId = "B7C60175-B370-4CE4-AC86-08D81D38F5FE";
                 dynamic result = await _loandonor.AddLoanDonor(loanDonorDTO, UserId);
                 if (result.Success == false)
                 {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Giving_Api.Migrations
 {
-    public partial class InitMigration : Migration
+    public partial class updateDonationRepo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,21 @@ namespace Giving_Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CauseAccounts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "contacts",
+                columns: table => new
+                {
+                    ContactID = table.Column<Guid>(nullable: false),
+                    ContactMessage = table.Column<string>(nullable: true),
+                    ContactEmail = table.Column<string>(nullable: true),
+                    CauseId = table.Column<Guid>(nullable: false),
+                    Time = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_contacts", x => x.ContactID);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,6 +113,24 @@ namespace Giving_Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "recurringDonations",
+                columns: table => new
+                {
+                    RecurringDonationID = table.Column<Guid>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
+                    DonationDay = table.Column<DateTime>(nullable: false),
+                    Frequency = table.Column<string>(nullable: true),
+                    CauseID = table.Column<Guid>(nullable: false),
+                    UserID = table.Column<Guid>(nullable: false),
+                    DonationID = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_recurringDonations", x => x.RecurringDonationID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RegistrationDocument",
                 columns: table => new
                 {
@@ -114,6 +147,22 @@ namespace Giving_Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RegistrationDocument", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "reviews",
+                columns: table => new
+                {
+                    ReviewID = table.Column<Guid>(nullable: false),
+                    ReviewMessage = table.Column<string>(nullable: true),
+                    ReviewEmail = table.Column<string>(nullable: true),
+                    ReviewTime = table.Column<DateTime>(nullable: false),
+                    CauseID = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_reviews", x => x.ReviewID);
                 });
 
             migrationBuilder.CreateTable(
@@ -305,6 +354,9 @@ namespace Giving_Api.Migrations
                 name: "Cause");
 
             migrationBuilder.DropTable(
+                name: "contacts");
+
+            migrationBuilder.DropTable(
                 name: "Donations");
 
             migrationBuilder.DropTable(
@@ -318,6 +370,12 @@ namespace Giving_Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "MyRewards");
+
+            migrationBuilder.DropTable(
+                name: "recurringDonations");
+
+            migrationBuilder.DropTable(
+                name: "reviews");
 
             migrationBuilder.DropTable(
                 name: "UserProfile");

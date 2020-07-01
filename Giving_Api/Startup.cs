@@ -39,6 +39,9 @@ namespace Giving_Api
             services.AddScoped<ILoanDonor, LoanDonorRepo>();
             services.AddScoped<IVolunteer, VolunteerRepo>();
             services.AddScoped<IUserProfile, UserProfileRepo>();
+            services.AddScoped<IContact, ContactRepo>();
+            services.AddScoped<IReview, ReviewsRepo>();
+            services.AddScoped<IRecurringDonation, RecurringDonationRepo>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<DataContext>(option => option.
             UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);

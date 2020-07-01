@@ -44,8 +44,9 @@ namespace Giving_Api.Controllers
 
             try
             {
-                var UserId = "6B42D1A9-C066-4F7F-8686-08D819F151A5";
-                dynamic result = await _donation.AddDonation(donationDTO, CauseId, UserId);
+                var UserId = "B7C60175-B370-4CE4-AC86-08D81D38F5FE";
+                donationDTO.UserId = UserId;
+                dynamic result = await _donation.AddDonation(donationDTO, CauseId);
                 if (result.Success == false)
                 {
                     return BadRequest(result);

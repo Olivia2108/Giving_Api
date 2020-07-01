@@ -1,36 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Giving_Api.Interface;
 using Giving_Api.Models;
-using Giving_Api.Security;
 using Giving_Api.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Giving_Api.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
-    public class DonationController : ControllerBase
+    public class RecurringDonationController : ControllerBase
     {
-        private readonly IDonation _donation;
+        private readonly IRecurringDonation _recurringdonation;
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _accessor;
 
-        public DonationController(IDonation donation, IConfiguration config, IHttpContextAccessor accessor)
+        public RecurringDonationController(IRecurringDonation recurringdonation, IConfiguration config, IHttpContextAccessor accessor)
         {
-            _donation = donation;
+            _recurringdonation = recurringdonation;
             _config = config;
             _accessor = accessor;
         }
@@ -38,22 +31,21 @@ namespace Giving_Api.Controllers
         ServiceResponse res = new ServiceResponse();
 
         // [Authorize(Roles ="User")]
-        [HttpPost("Donation/{CauseId}")]
-        public async Task<IActionResult> Donation(string CauseId, DonationDTO donationDTO)
+        [HttpPost("RecurringDonation")]
+        public async Task<IActionResult> RecurringDonation(RecurringDonationDTO RecurringdonationDTO)
         {
 
             try
             {
-                var UserId = "B7C60175-B370-4CE4-AC86-08D81D38F5FE";
-                donationDTO.UserId = UserId;
-                dynamic result = await _donation.AddDonation(donationDTO, CauseId);
+                var UserId = "6B42D1A9-C066-4F7F-8686-08D819F151A5";
+                dynamic result = await _recurringdonation.AddRecurringDonation(RecurringdonationDTO);
                 if (result.Success == false)
                 {
                     return BadRequest(result);
                 }
 
-               return Ok(result);
-                
+                return Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -63,14 +55,14 @@ namespace Giving_Api.Controllers
         }
 
         [HttpGet]
-        [Route("GetDonationById/{id}")]
-        public async Task<IActionResult> GetDonationById(Guid id)
+        [Route("GetRecurringDonationById/{id}")]
+        public async Task<IActionResult> GetRecurringDonationById(Guid id)
         {
             try
             {
                 if (id != null)
                 {
-                    dynamic donateById = await _donation.GetDonationById(id);
+                    dynamic donateById = await _recurringdonation.GetRecurringDonationById(id);
                     if (donateById.Success == false)
                     {
                         return NotFound(donateById);
@@ -91,12 +83,12 @@ namespace Giving_Api.Controllers
         }
 
         [HttpGet]
-        [Route("AllDonation")]
-        public async Task<IActionResult> GetAllDonation()
+        [Route("AllRecuuringDonation")]
+        public async Task<IActionResult> GetAllRecurringDonation()
         {
             try
             {
-                dynamic data = _donation.GetDonation();
+                dynamic data = await _recurringdonation.GetRecurringDonation();
 
                 if (data.Success == false)
                 {
@@ -112,41 +104,19 @@ namespace Giving_Api.Controllers
         }
 
 
-        [HttpGet]
-        [Route("GetDonationByUserEmail/{Email}")]
-        public async Task<IActionResult> GetDonationByUserEmail(string Email)
-        {
-            try
-            {
-                dynamic data = _donation.GetDonationByUserEmail(Email);
-
-                if (data.Success == false)
-                {
-                    return NotFound(data);
-                }
-                return Ok(data);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
-
-        [HttpPost("UpdateDonation/{Id}")]
-        public async Task<IActionResult> UpdateDonation(DonationDTO donationDTO, Guid Id)
+        [HttpPost("UpdateRecurringDonation/{Id}")]
+        public async Task<IActionResult> UpdateRecurringDonation(RecurringDonationDTO recurringdonationDTO, Guid Id)
         {
 
             try
             {
-                dynamic result = await _donation.UpdateDonation(donationDTO, Id);
+                dynamic result = await _recurringdonation.UpdateRecurringDonation(recurringdonationDTO, Id);
                 if (result.Success == false)
                 {
                     return BadRequest(result);
                 }
                 return Ok(result);
-                
+
             }
             catch (Exception ex)
             {
@@ -159,14 +129,14 @@ namespace Giving_Api.Controllers
 
 
         [HttpDelete]
-        [Route("DeleteDonationById/{id}")]
-        public async Task<IActionResult> DeleteDonationById(Guid id)
+        [Route("DeleteRecurringDonationById/{id}")]
+        public async Task<IActionResult> DeleteRecurringDonationById(Guid id)
         {
             try
             {
                 if (id != null)
                 {
-                    dynamic deleteById = await _donation.DeleteDonationById(id);
+                    dynamic deleteById = await _recurringdonation.DeleteRecurringDonationById(id);
                     if (deleteById.Success == false)
                     {
                         return NotFound(deleteById);
@@ -176,7 +146,7 @@ namespace Giving_Api.Controllers
 
                 }
 
-                return BadRequest("Donation Id cannot be null");
+                return BadRequest("RecurringDonation Id cannot be null");
             }
             catch (Exception ex)
             {

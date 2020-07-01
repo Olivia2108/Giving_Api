@@ -17,5 +17,6 @@ namespace Giving_Api.ViewModels
         public string Pin { get; set; }
         public bool Annonymous { get; set; }
         public string Frequency { get; set; }
+        public string UserId { get; set; }
     }
 }

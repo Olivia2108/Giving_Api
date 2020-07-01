@@ -33,7 +33,6 @@ namespace Giving_Api.Repositories
                     Facebook = userProfileDTO.Facebook,
                     Instagram = userProfileDTO.Instagram,
                     Picture = userProfileDTO.Picture,
-                    RegDocument = userProfileDTO.RegDocument,
                     RegDocumentId = userProfileDTO.RegDocumentId,
                     State = userProfileDTO.State,
                     Twitter = userProfileDTO.Twitter,

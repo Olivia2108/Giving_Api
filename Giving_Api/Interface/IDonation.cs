@@ -10,7 +10,7 @@ namespace Giving_Api.Interface
    {
         Task<object> GetDonation();
         Task<object> GetDonationById(Guid Id);
-        Task<object> AddDonation(DonationDTO donationDTO, string CauseID, string UserEmail);
+        Task<object> AddDonation(DonationDTO donationDTO, string CauseID);
         Task<object> UpdateDonation(DonationDTO donationDTO, Guid Id);
         Task<object> DeleteDonationById(Guid Id);
         Task<object> GetDonationByUserEmail(string Email);

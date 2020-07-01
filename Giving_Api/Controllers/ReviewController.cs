@@ -87,7 +87,7 @@ namespace Giving_Api.Controllers
 
         [HttpGet]
         [Route("GetReviewByUserEmail/{Email}")]
-        public async Task<IActionResult> GetReviewByUserEmail(string Email)
+        public IActionResult GetReviewByUserEmail(string Email)
         {
             try
             {

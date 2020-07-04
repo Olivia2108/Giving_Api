@@ -30,8 +30,9 @@ namespace Giving_Api.Repositories
                     ContactEmail = contacDTO.ContactEmail,
                      ContactMessage = contacDTO.ContactMessage,
                      Time = contacDTO.Time,
-                     CauseId = contacDTO.CauseId
-                     
+                     CauseId = contacDTO.CauseId,
+                    DateCreated = DateTime.Now
+
                 };
                 await dataContext.AddAsync(data);
                 int result = await dataContext.SaveChangesAsync();

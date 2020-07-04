@@ -18,7 +18,12 @@ namespace Giving_Api.Models
         public string Identification_Path { get; set; }
         public string AuthorizedSignatoryList_Path { get; set; }
         public string ValidIdentificationOfAuthorizedSignatories_Path { get; set; }
-       
+        public DateTime DateCreated { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public string Location { get; set; }
+
+
 
     }
 }

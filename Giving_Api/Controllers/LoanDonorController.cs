@@ -86,7 +86,7 @@ namespace Giving_Api.Controllers
 
         [HttpGet]
         [Route("AllLoanDonor")]
-        public async Task<IActionResult> GetAllLoans()
+        public async Task<IActionResult> GetAllLoanDonor()
         {
             try
             {
@@ -187,5 +187,10 @@ namespace Giving_Api.Controllers
                 throw;
             }
         }
+
+
+        [HttpGet]
+        [Route("GetTotalLoanDonor")]
+        public int Calculate_Total_Number_LoanDonor() => _loandonor.GetLoanDonorCount();
     }
 }

@@ -82,9 +82,6 @@ namespace Giving_Api.Controllers
 
         }
 
-
-
-
         [HttpGet]
         [Route("GetContactByUserEmail/{Email}")]
         public async Task<IActionResult> GetContactByUserEmail(string Email)

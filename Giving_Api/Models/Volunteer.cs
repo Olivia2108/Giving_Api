@@ -23,6 +23,12 @@ namespace Giving_Api.Models
         public string InterestDuration { get; set; }
         public bool VolunteerPledge { get; set; }
         public string Comment { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public string Location { get; set; }
+        public int TransactionType { get; set; }
+
 
 
     }

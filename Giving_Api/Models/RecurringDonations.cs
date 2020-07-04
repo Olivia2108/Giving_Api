@@ -17,5 +17,11 @@ namespace Giving_Api.Models
         public string CauseID { get; set; }
         public string UserID { get; set; }
        public Guid DonationID { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public string Location { get; set; }
+        public int TransactionType { get; set; }
+
     }
 }

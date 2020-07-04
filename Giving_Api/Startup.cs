@@ -5,6 +5,7 @@ using System.Text;
 using Giving_Api.Data;
 using Giving_Api.Interface;
 using Giving_Api.Repositories;
+using Giving_Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,7 @@ namespace Giving_Api
             services.AddScoped<IContact, ContactRepo>();
             services.AddScoped<IReview, ReviewsRepo>();
             services.AddScoped<IRecurringDonation, RecurringDonationRepo>();
+            services.AddScoped<IMailService, MailService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<DataContext>(option => option.
             UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);

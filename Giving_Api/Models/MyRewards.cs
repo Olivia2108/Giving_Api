@@ -10,5 +10,10 @@ namespace Giving_Api.Models
     {
         [Key]
         public Guid Id { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public string Location { get; set; }
+        public int TransactionType { get; set; }
+
     }
 }

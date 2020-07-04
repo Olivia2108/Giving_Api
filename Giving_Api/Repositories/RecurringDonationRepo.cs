@@ -66,8 +66,10 @@ namespace Giving_Api.Repositories
                    Email = recurringDonationDTO.Email,
                    Frequency = recurringDonationDTO.Frequency,
                    FullName = recurringDonationDTO.FullName,
-                   UserID = recurringDonationDTO.UserID
-                   
+                   UserID = recurringDonationDTO.UserID,
+                    DateCreated = DateTime.Now
+
+
                 };
                 await dataContext.AddAsync(data);
                 int result = await dataContext.SaveChangesAsync();

@@ -45,7 +45,8 @@ namespace Giving_Api.Repositories
                     Pin = donationDTO.Pin,
                     CauseId = CauseID,
                     UserId = donationDTO.UserId,
-                    Frequency = donationDTO.Frequency
+                    Frequency = donationDTO.Frequency,
+                    DateCreated = DateTime.Now
 
                 };
                 await dataContext.AddAsync(data);
@@ -126,9 +127,6 @@ namespace Giving_Api.Repositories
             }
         }
 
-
-        
-
         public async Task<object> GetDonationById(Guid Id)
         {
             try
@@ -204,9 +202,6 @@ namespace Giving_Api.Repositories
 
         }
 
-
-
-
         public async Task<object> UpdateDonation(DonationDTO donationDTO, Guid Id)
         {
             try
@@ -256,8 +251,6 @@ namespace Giving_Api.Repositories
             }
         }
 
-
-
         public async Task<object> DeleteDonationById(Guid Id)
         {
             try
@@ -294,6 +287,8 @@ namespace Giving_Api.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public int GetDonationCount() => dataContext.Donations.Count();
 
     }
 }

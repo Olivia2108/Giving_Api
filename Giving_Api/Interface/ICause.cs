@@ -14,5 +14,6 @@ namespace Giving_Api.Interface
         Task<object> GetCauseByUserId(Guid UserId);
         Task<object> UpdateCause(CauseDTO causeDTO, Guid Id);
         Task<object> DeleteCauseById(Guid Id);
+        int GetCauseCount();
     }
 }

@@ -22,5 +22,10 @@ namespace Giving_Api.Models
         public string Pin { get; set; }
         public bool Annonymous { get; set; }
         public string Frequency { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public string Location { get; set; }
+
     }
 }

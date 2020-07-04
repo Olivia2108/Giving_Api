@@ -96,7 +96,6 @@ namespace Giving_Api.Controllers
         }
 
 
-
         [Route("GetCauseByUserId/{UserId}")]
         [HttpGet]
         public async Task<IActionResult> GetCauseByUserId(Guid UserId)
@@ -199,5 +198,10 @@ namespace Giving_Api.Controllers
             }
 
         }
+
+        [HttpGet]
+        [Route("GetTotalCauses")]
+        public int Calculate_Total_Number_Cause() => _cause.GetCauseCount();
+
     }
 }

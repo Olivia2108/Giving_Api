@@ -37,7 +37,8 @@ namespace Giving_Api.Repositories
                     State = userProfileDTO.State,
                     Twitter = userProfileDTO.Twitter,
                     Website = userProfileDTO.Website,
-                    UserID = userProfileDTO.UserID
+                    UserID = userProfileDTO.UserID,
+                    DateCreated = DateTime.Now
                 };
                 await dataContext.AddAsync(data);
                 int result = await dataContext.SaveChangesAsync();

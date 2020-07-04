@@ -38,7 +38,8 @@ namespace Giving_Api.Repositories
                     Purpose = loansDTO.Purpose,
                     Repaymentsource = loansDTO.Repaymentsource,
                     Tenor = loansDTO.Tenor,
-                    UserId = userID
+                    UserId = userID,
+                    DateCreated = DateTime.Now
                 };
                 await dataContext.AddAsync(data);
                 int result = await dataContext.SaveChangesAsync();
@@ -247,5 +248,7 @@ namespace Giving_Api.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public int GetLoansCount() => dataContext.loans.Count();
     }
 }

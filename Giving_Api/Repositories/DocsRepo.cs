@@ -34,8 +34,9 @@ namespace Giving_Api.Repositories
                     Identification_Path = model.Identification_Path,
                     AuthorizedSignatoryList_Path = model.AuthorizedSignatoryList_Path,
                     ValidIdentificationOfAuthorizedSignatories_Path = model.ValidIdentificationOfAuthorizedSignatories_Path,
-                    UserId = UserId
-                    
+                    UserId = UserId,
+                    DateCreated = DateTime.Now
+
                 };
 
                 await dataContext.RegistrationDocument.AddAsync(doc);

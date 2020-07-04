@@ -1,12 +1,16 @@
-﻿using Giving_Api.Data;
+﻿
+using Giving_Api.Data;
 using Giving_Api.Interface;
 using Giving_Api.Models;
+using Giving_Api.Services;
 using Giving_Api.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Giving_Api.Repositories
@@ -14,15 +18,17 @@ namespace Giving_Api.Repositories
     public class UserRepo : IUser
     {
         private readonly DataContext _dataContext;
-        private readonly IEmail _email;
+        private readonly IMailService _mailService;
+        private readonly IConfiguration _configuration;
 
-        public UserRepo(DataContext dataContext, IEmail  email)
+        public UserRepo(DataContext dataContext, IMailService mailService, IConfiguration configuration)
         {
             _dataContext = dataContext;
-            _email = email;
-
+           _mailService = mailService;
+            _configuration = configuration;
         }
 
+        EmailDTO emailDTO = new EmailDTO();
         ServiceResponse res = new ServiceResponse();
         public async Task<object> Register(RegisterDTO registerDTO)
         {
@@ -41,15 +47,24 @@ namespace Giving_Api.Repositories
                     PhoneNumber = registerDTO.PhoneNumber,
                     Role= "User",
                     ConfirmationToken = Guid.NewGuid().ToString().Replace("-", ""),
-                    IsConfirmed = false
+                    IsConfirmed = false,
+                    DateCreated = DateTime.Now
 
                 };
                 await _dataContext.AddAsync(userObj);
                 int result = await _dataContext.SaveChangesAsync();
                 if (result > 0)
                 {
-                    string emailFor = "Verification";
-                    _email.WelcomeNewUser(userObj, emailFor);
+                    var email = new EmailDTO
+                    {
+                        Subject = "Welcome to Giving",
+                        Body = string.Format(_configuration.GetValue<string>("WelcomeNewUserMessage"), _configuration.GetValue<string>("ServerUrl"), userObj.ConfirmationToken),
+                        SourceEmail = "kingsley.ozoemena@sterling.ng",
+                        DestinatonEmail = userObj.EmailAddress
+                    };
+
+                    await _mailService.SendMail(email);
+
                 }
                 res.Success = true;
                 res.Data = userObj;
@@ -175,7 +190,6 @@ namespace Giving_Api.Repositories
             }
 
         }
-
 
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)

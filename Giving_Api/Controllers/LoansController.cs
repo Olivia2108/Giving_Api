@@ -186,5 +186,10 @@ namespace Giving_Api.Controllers
                 throw;
             }
         }
+
+
+        [HttpGet]
+        [Route("GetTotalLoan")]
+        public int Calculate_Total_Number_Loan() => _loan.GetLoansCount();
     }
 }

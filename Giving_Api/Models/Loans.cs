@@ -21,6 +21,11 @@ namespace Giving_Api.Models
         public string Tenor { get; set; }
         public string Repaymentsource { get; set; }
         public LoanDocument LoanDocument { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public int TransactionType { get; set; }
+
 
     }
 }

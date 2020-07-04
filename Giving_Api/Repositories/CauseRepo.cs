@@ -3,6 +3,7 @@ using Giving_Api.Interface;
 using Giving_Api.Models;
 using Giving_Api.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,17 @@ namespace Giving_Api.Repositories
     public class CauseRepo:ICause
     {
         private readonly DataContext dataContext;
+        private readonly IMailService _mailService;
+        private readonly IConfiguration _configuration;
 
-        public CauseRepo(DataContext _dataContext)
+        public CauseRepo(DataContext _dataContext, IMailService mailService, IConfiguration configuration)
         {
 
             dataContext = _dataContext;
+            _mailService = mailService;
+            _configuration = configuration;
         }
-
+        EmailDTO emailDTO = new EmailDTO();
         ServiceResponse res = new ServiceResponse();
         public async Task<object> AddCause(CauseDTO causeDTO, string userID)
         {
@@ -39,12 +44,25 @@ namespace Giving_Api.Repositories
                     PicturePath = causeDTO.PicturePath,
                     Title = causeDTO.Title,
                     VideoPath = causeDTO.VideoPath,
-                    UserID = userID
+                    UserID = userID,
+                    DateCreated = DateTime.Now
                 };
                 await dataContext.AddAsync(data);
                 int result = await dataContext.SaveChangesAsync();
                 if (result > 0)
                 {
+
+                    var email = new EmailDTO
+                    {
+                        Subject = "New Cause Request Submitted",
+                        Body = string.Format(_configuration.GetValue<string>("Cause"), _configuration.GetValue<string>("ServerUrl"), "userObj.ConfirmationToken"),
+                        SourceEmail = "kingsley.ozoemena@sterling.ng",
+                        DestinatonEmail = "approvals@giving.ng"
+                    };
+
+                    await _mailService.SendMail(email);
+
+
                     res.Success = true;
                     res.Data = data;
                     return res;
@@ -61,7 +79,6 @@ namespace Giving_Api.Repositories
                 throw new Exception(ex.Message);
             }
         }
-
 
         public async Task<object> GetAllCause()
         {
@@ -258,6 +275,8 @@ namespace Giving_Api.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public int GetCauseCount() => dataContext.Cause.Count();
 
     }
 }

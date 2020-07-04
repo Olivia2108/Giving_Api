@@ -14,5 +14,6 @@ namespace Giving_Api.Interface
         Task<object> UpdateDonation(DonationDTO donationDTO, Guid Id);
         Task<object> DeleteDonationById(Guid Id);
         Task<object> GetDonationByUserEmail(string Email);
+        int GetDonationCount();
     }
 }

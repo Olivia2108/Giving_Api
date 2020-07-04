@@ -26,7 +26,12 @@ namespace Giving_Api.Models
         public double DonorAccountNumber { get; set; }
         public string DonorAccountName { get; set; }
         public LoanDonorDocuments LoanDonorDocuments { get; set; }
-        
+        public DateTime DateCreated { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public string Location { get; set; }
+        public int TransactionType { get; set; }
+
 
 
     }

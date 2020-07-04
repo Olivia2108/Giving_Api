@@ -20,11 +20,16 @@ namespace Giving_Api.Models
         public bool Facebook { get; set; }
         public bool Twitter { get; set; }
         public bool Instagram { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [ForeignKey("RegDocumentId")]
         public RegistrationDocument RegDocument { get; set; }
         public Guid RegDocumentId { get; set; }
         public string UserID { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public string Location { get; set; }
+
 
     }
 }

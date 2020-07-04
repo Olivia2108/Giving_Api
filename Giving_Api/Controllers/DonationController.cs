@@ -96,7 +96,7 @@ namespace Giving_Api.Controllers
         {
             try
             {
-                dynamic data = _donation.GetDonation();
+                dynamic data = await _donation.GetDonation();
 
                 if (data.Success == false)
                 {
@@ -185,5 +185,11 @@ namespace Giving_Api.Controllers
             }
 
         }
+
+
+        [HttpGet]
+        [Route("GetTotalDonation")]
+        public int Calculate_Total_Number_Donation() => _donation.GetDonationCount();
+
     }
 }

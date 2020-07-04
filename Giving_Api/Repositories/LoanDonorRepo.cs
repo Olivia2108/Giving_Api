@@ -42,7 +42,8 @@ namespace Giving_Api.Repositories
                     Options = loandonorDTO.Options,
                     PurposePreferred = loandonorDTO.PurposePreferred,
                     Tenor = loandonorDTO.Tenor,
-                    UserId = userID
+                    UserId = userID,
+                    DateCreated = DateTime.Now
                 };
                 await dataContext.AddAsync(data);
                 int result = await dataContext.SaveChangesAsync();
@@ -267,6 +268,8 @@ namespace Giving_Api.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public int GetLoanDonorCount() => dataContext.LoanDonors.Count();
 
     }
 }

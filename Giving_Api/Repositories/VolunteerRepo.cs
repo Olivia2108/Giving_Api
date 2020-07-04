@@ -42,7 +42,8 @@ namespace Giving_Api.Repositories
                     PhoneNumber = volunteerDTO.PhoneNumber,
                     State = volunteerDTO.State,
                     VolunteerPledge =volunteerDTO.VolunteerPledge,
-                    UserId = userID
+                    UserId = userID,
+                    DateCreated = DateTime.Now
                 };
                 await dataContext.AddAsync(data);
                 int result = await dataContext.SaveChangesAsync();

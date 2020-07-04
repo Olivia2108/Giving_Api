@@ -18,6 +18,11 @@ namespace Giving_Api.Models
         public string MeansOfIdentification { get; set; }
         public string RelevantPictures { get; set; }
         public string VideoRecording { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public string Location { get; set; }
+
 
 
     }

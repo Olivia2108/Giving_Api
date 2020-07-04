@@ -15,5 +15,10 @@ namespace Giving_Api.Models
         public DateTime ReviewTime { get; set; }
         public Guid CauseID { get; set; }
         public Guid UserId { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public string Location { get; set; }
+
     }
 }

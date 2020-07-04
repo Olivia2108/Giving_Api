@@ -24,6 +24,11 @@ namespace Giving_Api.Models
         public CauseAccount CauseBeneficiaryAccount { get; set; }
         public string ExpectedProjectImpact { get; set; }
         public DateTime DateCountDown { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Device { get; set; }
+        public string IpAddress { get; set; }
+        public string Location { get; set; }
+        public int TransactionType { get; set; }
 
     }
 }

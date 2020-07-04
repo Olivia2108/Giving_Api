@@ -14,5 +14,7 @@ namespace Giving_Api.Interface
         Task<object> GetLoanDonorByUserId(Guid UserId);
         Task<object> UpdateLoanDonor(LoanDonorDTO loandonorDTO, Guid Id);
         Task<object> DeleteLoanDonorById(Guid Id);
+        int GetLoanDonorCount();
+
     }
 }

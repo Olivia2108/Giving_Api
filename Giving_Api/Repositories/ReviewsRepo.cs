@@ -32,8 +32,9 @@ namespace Giving_Api.Repositories
                     ReviewID = reviewDTO.ReviewID,
                     ReviewMessage = reviewDTO.ReviewMessage,
                     ReviewTime = reviewDTO.ReviewTime,
-                    UserId = reviewDTO.UserId
-                  
+                    UserId = reviewDTO.UserId,
+                    DateCreated = DateTime.Now
+
                 };
                 await dataContext.AddAsync(data);
                 int result = await dataContext.SaveChangesAsync();

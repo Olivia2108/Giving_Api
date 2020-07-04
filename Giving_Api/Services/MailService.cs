@@ -1,4 +1,5 @@
-﻿using Giving_Api.ViewModels;
+﻿using Giving_Api.Interface;
+using Giving_Api.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Giving_Api.Services
 {
-    public class MailService
+    public class MailService :IMailService
     {
         private readonly IHttpClientFactory _client;
         public MailService(IHttpClientFactory client)

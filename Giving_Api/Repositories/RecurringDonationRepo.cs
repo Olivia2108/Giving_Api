@@ -67,7 +67,8 @@ namespace Giving_Api.Repositories
                    Frequency = recurringDonationDTO.Frequency,
                    FullName = recurringDonationDTO.FullName,
                    UserID = recurringDonationDTO.UserID,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now,
+                    ModifiedDate = DateTime.Now
 
 
                 };

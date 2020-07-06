@@ -61,8 +61,10 @@ namespace MessagingAlertSender
                 TimeSpan end = new TimeSpan(23, 0, 0); //11 o'clock pm
                 TimeSpan now = DateTime.Now.TimeOfDay;
 
+                    //if it is within the specified TimeSpan
                     if ((now >= start) && (now <= end))
                     {
+                        //do this
                          response = emailSender.SendEmails();
                     }
                     if (response == true)

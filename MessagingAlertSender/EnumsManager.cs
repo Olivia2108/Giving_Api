@@ -26,5 +26,13 @@ namespace Giving_Api.Security
             ImpactInvestmentCode = 3,
             VolunteerCode = 4
         }
+
+        public enum RecurringFrequency
+        {
+            Weekly = 1,
+            Monthly = 2,
+            Quaterly = 3,
+            Annually = 4
+        }
     }
 }

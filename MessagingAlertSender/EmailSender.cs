@@ -8,6 +8,7 @@ using MessagingAlertSender.Data;
 using MessagingAlertSender.ViewModels;
 using MessagingAlertSender.Services;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace MessagingAlertSender
 {
@@ -77,16 +78,20 @@ namespace MessagingAlertSender
             try
             {
                 //checks if record has been excecuted
-               /* TimeSpan start = new TimeSpan(17, 0, 0); //5 o'clock pm
-                TimeSpan end = new TimeSpan(23, 0, 0); //11 o'clock pm
-                TimeSpan now = DateTime.Now.TimeOfDay;
+                /* TimeSpan start = new TimeSpan(17, 0, 0); //5 o'clock pm
+                 TimeSpan end = new TimeSpan(23, 0, 0); //11 o'clock pm
+                 TimeSpan now = DateTime.Now.TimeOfDay;
 
-                if ((now >= start) && (now <= end))
-                {*/
-                    var listOfMails = dataContext.recurringDonations.Where(o => o.statusId == (int)MessageStatusEnum.Pending 
-                    || o.statusId == (short)MessageStatusEnum.Attempted).ToList();
+                 if ((now >= start) && (now <= end))
+                 {*/
+                //gets lists of records from the db that matches these conditons
+                List<int> days = new List<int> { 365, 90, 30, 7 };
 
+                var listOfMails = dataContext.recurringDonations.Where(o => days.Contains(DbFunctions.DiffDays(DateTime.UtcNow, o.ModifiedDate).Value) && (o.statusId == (int)MessageStatusEnum.Pending 
+                    || o.statusId == (short)MessageStatusEnum.Attempted)
+                   ).ToList();
 
+                //loops through each of the mail gotten
                 if (listOfMails !=null)
                     {
                         foreach (var newMail in listOfMails)
@@ -107,16 +112,21 @@ namespace MessagingAlertSender
                                 }
                             }
                         }
-                            
+                            //goes to get the message body and subject from the messagecontent table where it matches the id in enums manager
+
                         var messageBody = dataContext.messageContent.Where(o => o.messageCode ==  (int)MessageContentCode.RecurringDonation).FirstOrDefault();
                                 mail.Subject = messageBody.subject;
                                 mail.Body = messageBody.body;
                                 mailId = newMail.RecurringDonationID;
 
                             MailService mailService = new MailService();
+
+                        //this sends the message to Sterling mail endpoint
                             mailService.SendMail(mail);
 
-                            UpdateMailDeliveryStatus(newMail.RecurringDonationID, (short)MessageStatusEnum.Sent, "Email Sent Successfully");
+                        //this updates the recurring table with the current status and modified date
+
+                        UpdateMailDeliveryStatus(newMail.RecurringDonationID, (short)MessageStatusEnum.Sent, "Email Sent Successfully");
                         }
                     }
                    
@@ -138,6 +148,7 @@ namespace MessagingAlertSender
             if (mailMessage != null)
             {
                 mailMessage.statusId = (short)statusId;
+                mailMessage.ModifiedDate = DateTime.Now;
                 var output = dataContext.SaveChanges() > 0;
 
                 if (output)

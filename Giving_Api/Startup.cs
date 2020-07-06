@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
 using System.Text;
 using Giving_Api.Data;
@@ -32,6 +33,7 @@ namespace Giving_Api
         {
             services.AddControllers();
             services.AddScoped<IEmail,EmailRepo>();
+           
             services.AddScoped<IUser, UserRepo>();
             services.AddScoped<IDonation, DonationRepo>();
             services.AddScoped<ICause, CauseRepo>();
@@ -45,6 +47,7 @@ namespace Giving_Api
             services.AddScoped<IRecurringDonation, RecurringDonationRepo>();
             services.AddScoped<IMailService, MailService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpClient();
             services.AddDbContext<DataContext>(option => option.
             UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
 

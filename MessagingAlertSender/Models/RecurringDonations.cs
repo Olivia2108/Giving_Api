@@ -14,10 +14,12 @@ namespace MessagingAlertSender.Models
         public string FullName { get; set; }
         public DateTime DonationDay { get; set; }
         public string Frequency { get; set; }
+        public int Interval { get; set; }
         public string CauseID { get; set; }
         public string UserID { get; set; }
        public Guid DonationID { get; set; }
         public DateTime DateCreated { get; set; }
+        public DateTime ModifiedDate { get; set; }
         public string Device { get; set; }
         public string IpAddress { get; set; }
         public string Location { get; set; }

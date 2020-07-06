@@ -1,7 +1,4 @@
-﻿using FintrakBanking.Interfaces.AlertMonitoring;
-using FintrakBanking.Repositories.AlertMonitoring;
-using FintrakBanking.Repositories.Setups.General;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data.Entity.Validation;
 using System.Threading;
@@ -11,20 +8,18 @@ using Topshelf.Logging;
 using Timer = System.Timers.Timer;
 
 
-namespace FintrakBanking.MessagingAlertSender
+namespace MessagingAlertSender
 {
     public class WindowService : ServiceControl
     {
         private Timer _syncTimer;
         private static object s_lock = new object();
         EmailSender emailSender = new EmailSender();
-        private AlertRepository alert = new AlertRepository();
         private string interval = ConfigurationManager.AppSettings["emailServiceInterval"];
         private string slaEscalationIntervalInHours = ConfigurationManager.AppSettings["SLAEscalationIntervalInHours"];
         private string alertMessageLoggertime = ConfigurationManager.AppSettings["alertMessageLoggingTime"];
         private static readonly LogWriter _log = HostLogger.Get<WindowService>();
-        AlertMessageLogger logger = new AlertMessageLogger();
-        
+        private bool response = false;
         public WindowService()
         {
         }
@@ -61,8 +56,15 @@ namespace FintrakBanking.MessagingAlertSender
             {
                 try
                 {
-                   // SEND EMAILS
-                    bool response = emailSender.SendEmails();
+                    // SEND EMAILS
+                TimeSpan start = new TimeSpan(17, 0, 0); //5 o'clock pm
+                TimeSpan end = new TimeSpan(23, 0, 0); //11 o'clock pm
+                TimeSpan now = DateTime.Now.TimeOfDay;
+
+                    if ((now >= start) && (now <= end))
+                    {
+                         response = emailSender.SendEmails();
+                    }
                     if (response == true)
                     {
                         _log.Info("");
@@ -75,55 +77,6 @@ namespace FintrakBanking.MessagingAlertSender
                         _log.Info("==================================================================");
                         _log.Info("No email has been sent as at : " + DateTime.Now);
                     }
-
-
-                    //LOG SLA APPROVAL NOTIFICATIONS
-                    //if (slaEscalationIntervalInHours != null)
-                    //{
-                    //    DateTime currentDate = DateTime.Now;
-                    //    TimeSpan escalationTime = currentDate.AddHours(Convert.ToInt32(slaEscalationIntervalInHours)).TimeOfDay;
-                    //    TimeSpan endOfescalationTime = DateTime.Now.AddMinutes(5).TimeOfDay;
-                    //    TimeSpan timeAtTheMoment = DateTime.Now.TimeOfDay;
-
-                    //    if (escalationTime >= timeAtTheMoment && escalationTime <= endOfescalationTime)
-                    //    {
-                    //        _log.Info("");
-                    //        _log.Info("==================================================================");
-                    //        _log.Info("SLA notification has started successfully at : " + DateTime.Now);
-
-                    //        logger.LogSLAApprovalNotification();
-
-                    //        _log.Info("");
-                    //        _log.Info("==================================================================");
-                    //        _log.Info("SLA notification has ends at : " + DateTime.Now);
-                    //    }
-
-                    //}
-
-                    //// LOG MONITORING ALERTS
-                    //TimeSpan currentTime = DateTime.Now.TimeOfDay;
-                    //TimeSpan LoggeingTimeFromConfig = Convert.ToDateTime(alertMessageLoggertime).TimeOfDay;
-
-                    //TimeSpan alertLoggerMaxRuntime = TimeSpan.FromMinutes(30);
-                    //TimeSpan LoggeingTimeFromConfigExtended = LoggeingTimeFromConfig.Add(alertLoggerMaxRuntime);
-
-
-                    //if (currentTime >= LoggeingTimeFromConfig && currentTime <= LoggeingTimeFromConfigExtended)
-                    //{
-                    //    //  _log.Info("##############   started at " + currentTime + "     ##################### ");
-                    //    _log.Info("==================================================================");
-                    //    _log.Info("Monitoring alert has started successfully");
-
-                    //   emailSender.LogMonitorringAlert();
-                    //    currencyAndRateUpdate.MigrateExchangeRate();
-
-                    //    _log.Info("");
-                    //    _log.Info("==================================================================");
-                    //    _log.Info("Monitoring alert has finished logging successfully ");
-                    //}
-
-
-
                 }
                 catch (DbEntityValidationException ee)
                 {

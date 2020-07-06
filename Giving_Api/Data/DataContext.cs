@@ -31,6 +31,6 @@ namespace Giving_Api.Data
         public DbSet<Review> reviews { get; set; }
         public DbSet<Contact> contacts { get; set; }
         public DbSet<RecurringDonations> recurringDonations { get; set;}
-     
+        public DbSet<MessageContent> messageContents { get; set; }
     }
 }

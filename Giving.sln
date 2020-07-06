@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giving_Web", "Giving_Web\Gi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Giving_Api", "Giving_Api\Giving_Api.csproj", "{4892D01E-EF25-49AB-9854-7E0FAFDC1949}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagingAlertSender", "MessagingAlertSender\MessagingAlertSender.csproj", "{CEF982E6-22ED-4DEF-840F-358D3D177E8F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonitoringMessageLogger", "MonitoringMessageLogger\MonitoringMessageLogger.csproj", "{974DA792-AAE4-4415-BA86-A4C22F0680EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagingAlertSender", "MessagingAlertSender\MessagingAlertSender.csproj", "{974DA792-AAE4-4415-BA86-A4C22F0680EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,10 @@ Global
 		{4892D01E-EF25-49AB-9854-7E0FAFDC1949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4892D01E-EF25-49AB-9854-7E0FAFDC1949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4892D01E-EF25-49AB-9854-7E0FAFDC1949}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CEF982E6-22ED-4DEF-840F-358D3D177E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CEF982E6-22ED-4DEF-840F-358D3D177E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CEF982E6-22ED-4DEF-840F-358D3D177E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CEF982E6-22ED-4DEF-840F-358D3D177E8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EE47057-3F40-44E7-9F05-01FB47C77ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EE47057-3F40-44E7-9F05-01FB47C77ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EE47057-3F40-44E7-9F05-01FB47C77ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EE47057-3F40-44E7-9F05-01FB47C77ECD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{974DA792-AAE4-4415-BA86-A4C22F0680EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{974DA792-AAE4-4415-BA86-A4C22F0680EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{974DA792-AAE4-4415-BA86-A4C22F0680EF}.Release|Any CPU.ActiveCfg = Release|Any CPU

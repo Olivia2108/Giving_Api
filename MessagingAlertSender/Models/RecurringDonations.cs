@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Giving_Api.Models
+namespace MessagingAlertSender.Models
 {
     public class RecurringDonations
     {

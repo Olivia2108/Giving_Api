@@ -23,7 +23,7 @@ namespace Giving_Api.Services
                 new KeyValuePair<string, string>("body", model.Body),
                 new KeyValuePair<string, string>("subject", model.Subject),
                 new KeyValuePair<string, string>("sourceEmail", model.SourceEmail),
-                new KeyValuePair<string, string>("destinationEmail", model.DestinatonEmal),
+                new KeyValuePair<string, string>("destinationEmail", model.DestinatonEmail),
             });
 
             var client = _client.CreateClient();

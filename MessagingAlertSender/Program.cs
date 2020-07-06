@@ -1,13 +1,12 @@
-﻿using FintrakBanking.Interfaces.Setups.General;
+﻿using Microsoft.Extensions.Logging;
 using Ninject;
 using NLog;
 using System;
 using System.Reflection;
 using Topshelf;
-using Topshelf.Logging;
 using Topshelf.Ninject;
 
-namespace FintrakBanking.MessagingAlertSender
+namespace MessagingAlertSender
 {
     class Program
     {
@@ -44,9 +43,9 @@ namespace FintrakBanking.MessagingAlertSender
 
                     serviceConfig.RunAsLocalSystem();
 
-                    serviceConfig.SetDescription("Fintrak Credit 360 General Email Alert Sender");
-                    serviceConfig.SetDisplayName("Fintrak Credit 360 Email Sender");
-                    serviceConfig.SetServiceName("FintrakCredit360EmailSender");
+                    serviceConfig.SetDescription("Giving Sterling Bank General Email Alert Sender");
+                    serviceConfig.SetDisplayName("Giving Sterling Bank Email Sender");
+                    serviceConfig.SetServiceName("GivingSterlingBank");
                 });
 
         }
